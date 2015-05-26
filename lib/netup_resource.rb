@@ -227,11 +227,11 @@ module NetupResource
         parameters.each do |key,value|
           formated += counter==0 ? '?' : '&'
           if value.is_a?(Array)
-            value.each_with_index{|obj,i| formated += (i==0 ? "" : "&") + "#{key}[#{i}]=#{URI.encode(obj)}"}
+            value.each_with_index{|obj,i| formated += (i==0 ? "" : "&") + "#{key}[#{i}]=#{URI.encode(obj.to_s)}"}
           elsif value.is_a?(Hash)
             formated += value.to_param
           else
-            formated += "#{key}=#{URI.encode(value)}"
+            formated += "#{key}=#{URI.encode(value.to_s)}"
           end
           counter += 1
         end
