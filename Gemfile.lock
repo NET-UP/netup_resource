@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    netup_resource (0.0.1)
+    netup_resource (0.2.0)
       rails (~> 3.2.21)
 
 GEM

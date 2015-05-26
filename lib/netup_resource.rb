@@ -73,100 +73,10 @@
 #
 #
 module NetupResource
+  require "netup_resource/yaml"
+  require "netup_resource/core"
+
   #base class for models to inherit from
-  class Base
-
-    class << self
-      #base url attribute; type: string
-      attr_accessor :url
-      # format type
-      attr_accessor :type
-      attr_accessor :request_type
-      attr_accessor :response_type
-      #optional response object schema
-      attr_accessor :schema
-      #optional ssl connector
-      attr_accessor :ssl
-      attr_accessor :accessing_user_id
-      #GET-Request
-      # uri: api-uri
-      # parameters: request params hash(optional)
-      # auth: base aut(optional)
-      def get(uri="",parameters={},auth=nil)
-        return request(@url+uri,parameters,auth,:get)
-      end
-      #POST-Request
-      # uri: api-uri
-      # parameters: request params hash(optional)
-      # auth: base aut(optional)
-      def post(uri="",parameters={},auth=nil)
-        return request(@url+uri,parameters,auth,:post)
-      end
-
-      #PUT-Request
-      # uri: api-uri
-      # parameters: request params hash(optional)
-      # auth: base aut(optional)
-      def put(uri="",parameters={},auth=nil)
-        return request(@url+uri,parameters,auth,:put)
-      end
-
-      #DELETE-Request
-      # uri: api-uri
-      # parameters: request params hash(optional)
-      # auth: base aut(optional)
-      def delete(uri="",parameters={},auth=nil)
-        return request(@url+uri,parameters,auth,:delete)
-      end
-      #URL-Setter
-      def url=(u)
-        @url = u
-      end
-      #Type-Setter
-      def type=(t)
-        @type = t
-      end
-      #Schema-Setter
-      def schema=(s)
-        @schema = s
-      end
-      #ssl-Setter
-      def ssl=(ssl)
-        @ssl = ssl
-      end
-      private
-      #general request function
-      def request(uri="",parameters={},auth=nil,type)
-        ### DAS HIER ($accessing_user_id) IST EINE GLOBALE VARIABLE
-        ### SIE WIRD DER API ÜBERGEBEN UND ENTHÄLT DEN EINGELOGGTEN USER (FALLS VORHANDEN)
-        parameters[:accessing_user_id] ||= $accessing_user_id  #self.accessing_user_id
-        ### NIEMALS FÜR IRGENDETWAS ANDERES VERWENDEN!!!
-        ### AM BESTEN EINFACH FINGER WEG!!!
-        answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats)
-        resp_obj = NetupResource::ResponseObject.create(@schema)
-        response = resp_obj.new
-        if @schema
-          for i in (0...@schema.length)
-            response.instance_variable_set("@#{@schema[i].to_s}".to_sym,answer[@schema[i].to_s])
-          end
-        elsif YamL.schema_exists?(self.name.downcase)
-          path = "#{Rails.root}/config/netup_resource/schema/#{self.name.downcase}.yml"
-          return YamL.data_object(path,answer)
-        else
-          return ResponseObject.auto_detect(answer)
-        end
-        return response
-      end
-
-      def formats
-        {
-          :type => type,
-          :request_type => request_type,
-          :response_type => response_type
-        }
-      end
-    end
-  end
   protected
 
   #HTTP-Request Module
@@ -227,11 +137,11 @@ module NetupResource
         parameters.each do |key,value|
           formated += counter==0 ? '?' : '&'
           if value.is_a?(Array)
-            value.each_with_index{|obj,i| formated += (i==0 ? "" : "&") + "#{key}[#{i}]=#{obj}"}
+            value.each_with_index { |obj,i| formated += (i==0 ? "" : "&") + ["#{key}[#{i}]", obj].compact.join("=") }
           elsif value.is_a?(Hash)
             formated += value.to_param
           else
-            formated += "#{key}=#{value}"
+            formated += [key, value].compact.join("=")
           end
           counter += 1
         end
@@ -367,85 +277,7 @@ module NetupResource
   end
 
   #module to read *.yml files
-  module YamL
-    require 'yaml'
-
-    #parse yaml file to object
-    def self.to_object(file)
-      file_schema = file
-      object_schema = Array.new
-      sub_object_schema = Array.new
-      file_schema.each do |key,value|
-        object_schema << key.to_sym
-        if value.is_a?(Array)
-          h = Hash.new
-          h[key] = Array.new
-          value.each{|i| h[key] << i.to_sym}
-          sub_object_schema << h
-        end
-      end
-      object = ResponseObject.create(object_schema).new
-      if sub_object_schema.length > 0
-        sub_object_schema.each do |obj|
-          obj.each do |key,value|
-            object[key] = ResponseObject.create(value).new
-          end
-        end
-      end
-      return object
-    end
-
-    #fill object with data
-    def self.data_object(file_path,data=[])
-      if data.length > 0
-        data = [data] if !data.is_a?(Array)
-        file = YAML.load_file(file_path)
-        answer = Array.new
-        data.each do |d|
-          object = to_object(file)
-          d.each do |key,value|
-            if value.is_a?(Hash)
-              if object[key.to_sym].instance_variables.include?(:@schema)
-                sub_schema = object[key.to_sym].schema
-                sub_schema.each do |i|
-                  object[key.to_sym][i] = value[i.to_s]
-                end
-              else
-                object[key.to_sym] = value
-              end
-            elsif value.is_a?(Array)
-              if object[key.to_sym].instance_variables.include?(:@schema)
-                sub_schema = object[key.to_sym].schema
-                ary = Array.new
-                sub_obj = ResponseObject.create(sub_schema)
-                value.each do |val|
-                  sub_obj_inst = sub_obj.new
-                  sub_schema.each do |i|
-                    sub_obj_inst.instance_variable_set("@#{i.to_s}".to_sym, val[i.to_s])
-                  end
-                  ary << sub_obj_inst
-                end
-                object[key.to_sym] = ary
-              else
-                object[key.to_sym] = value
-              end
-            else
-              object[key.to_sym] = value
-            end
-          end
-          answer << object
-        end
-        return answer.length == 1 ? answer[0] : answer
-      end
-      return Array.new
-    end
-
-    #check if model schema exists
-    def self.schema_exists?(name)
-      return File.exists?("#{Rails.root}/config/netup_resource/schema/#{name}.yml")
-    end
-
-  end
+  
 end
 #ruby array extension
 class Array

@@ -57,7 +57,7 @@ RSpec.describe TestApi do
     end
 
     it "sends nested params" do
-      parsed_url = "http://test/test_request?accessing_user_id&nested=%7B:nested_deeper=%3E%7B:say=%3E%5B%22what%22,%20%22up%22%5D%7D%7D"
+      parsed_url = "http://test/test_request?accessing_user_id&nested_deeper%5Bsay%5D%5B0%5D=what&nested_deeper%5Bsay%5D%5B1%5D=up"
       stub_request(:get, parsed_url)
         .with(stub_get_params)
         .to_return(return_params)
