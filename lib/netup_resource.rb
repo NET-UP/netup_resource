@@ -223,18 +223,18 @@ module NetupResource
       formated = if parameters.is_a?(String)
         formated += "?#{parameters}"
       else
-        [formated,URI.encode_www_form(parameters)].join("?")
-        # parameters.each do |key,value|
-        #   formated += counter==0 ? '?' : '&'
-        #   if value.is_a?(Array)
-        #     value.each_with_index{|obj,i| formated += (i==0 ? "" : "&") + "#{key}[#{i}]=#{obj}"}
-        #   elsif value.is_a?(Hash)
-        #     formated += value.to_param
-        #   else
-        #     formated += "#{key}=#{value}"
-        #   end
-        #   counter += 1
-        # end
+        # [formated,URI.encode_www_form(parameters)].join("?")
+        parameters.each do |key,value|
+          formated += counter==0 ? '?' : '&'
+          if value.is_a?(Array)
+            value.each_with_index{|obj,i| formated += (i==0 ? "" : "&") + "#{key}[#{i}]=#{URI.encode(obj)}"}
+          elsif value.is_a?(Hash)
+            formated += value.to_param
+          else
+            formated += "#{key}=#{URI.encode(value)}"
+          end
+          counter += 1
+        end
       end
       return formated
     end
