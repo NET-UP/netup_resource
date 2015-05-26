@@ -235,6 +235,8 @@ module NetupResource
           end
           counter += 1
         end
+
+        formated
       end
       return formated
     end
