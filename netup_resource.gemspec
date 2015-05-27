@@ -7,7 +7,7 @@ require "netup_resource/version"
 Gem::Specification.new do |s|
   s.name        = "netup_resource"
   s.version     = NetupResource::VERSION
-  s.authors     = ["Fabian Zitter", "Michael Roeder"]
+  s.authors     = ["Michael Roeder", "Markus Kuerzinger", "Fabian Zitter"]
   s.email       = ["fabian.zitter@net-up.de"]
   s.homepage    = "TODO"
   s.summary     = "TODO: Summary of NetupResource."
