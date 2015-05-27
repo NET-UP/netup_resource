@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module NetupResource::ResponseObject - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>netup_resource/response_object.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-auto_detect">::auto_detect</a>
+    
+    <li ><a href="#method-c-create">::create</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../doc/created_rid.html">created.rid</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../NetupResource.html">NetupResource</a>
+  
+    <li><a href="../NetupResource/AutoDetect.html">NetupResource::AutoDetect</a>
+  
+    <li><a href="../NetupResource/Base.html">NetupResource::Base</a>
+  
+    <li><a href="../NetupResource/HttP.html">NetupResource::HttP</a>
+  
+    <li><a href="../NetupResource/ResponseObject.html">NetupResource::ResponseObject</a>
+  
+    <li><a href="../NetupResource/YamL.html">NetupResource::YamL</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module NetupResource::ResponseObject</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-auto_detect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">auto_detect</span><span
+            class="method-args">(data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="auto_detect-source">
+            <pre><span class="ruby-comment"># File netup_resource/response_object.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">auto_detect</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-constant">AutoDetect</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>).<span class="ruby-identifier">object</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- auto_detect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- auto_detect-method -->
+
+    
+      <div id="method-c-create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">(schema=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create response object</p>
+          
+          
+
+          
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File netup_resource/response_object.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">schema</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">obj</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">schema</span>
+      <span class="ruby-identifier">attr_reader</span> <span class="ruby-value">:schema</span>
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:initialize</span>){<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value">:@schema</span>,<span class="ruby-identifier">schema</span>)}
+      <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">i</span>}
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:[]</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance_variable_get</span>((<span class="ruby-string">&#39;@&#39;</span><span class="ruby-operator">+</span><span class="ruby-identifier">arg</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">to_sym</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">arg</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;Argument not in Schema&#39;</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:[]=</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_sym</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">instance_variable_set</span>((<span class="ruby-string">&#39;@&#39;</span><span class="ruby-operator">+</span><span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">to_sym</span>,<span class="ruby-identifier">v</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;Argument not in Schema&#39;</span>)
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:each</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">to_enum</span>(<span class="ruby-value">:each</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">proc</span>
+        <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">key</span>,<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>.<span class="ruby-identifier">to_sym</span>))}
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:to_s</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">str</span> = <span class="ruby-string">&quot;{&quot;</span>
+        <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">str</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{key}: #{instance_variable_get(&quot;@#{key}&quot;.to_sym)}&quot;</span>
+          <span class="ruby-identifier">str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;, &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;}&quot;</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">str</span>
+      <span class="ruby-keyword">end</span>
+      
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:attributes</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">attr</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{attr}&quot;</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">hash</span>
+      <span class="ruby-keyword">end</span>
+      
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:try</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr_key</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">answer</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">attr_key</span>.<span class="ruby-identifier">to_sym</span>)
+          <span class="ruby-identifier">answer</span> = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{attr_key}&quot;</span>.<span class="ruby-identifier">to_sym</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">answer</span>
+      <span class="ruby-keyword">end</span>
+      
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:errors?</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">:error</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">:errors</span>)
+      <span class="ruby-keyword">end</span>
+      
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">attr_accessor</span> <span class="ruby-value">:result</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
