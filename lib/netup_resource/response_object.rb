@@ -1,5 +1,5 @@
 module NetupResource  
-  module ResponseObject
+  class ResponseObject
     require "netup_resource/auto_detect"
     #create response object
     def self.create(schema=nil)
@@ -54,6 +54,7 @@ module NetupResource
           attr_accessor :result
         end
       end
+      
       return obj
     end
 
