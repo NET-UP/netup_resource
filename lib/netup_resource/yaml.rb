@@ -29,47 +29,11 @@ module NetupResource
 
     #fill object with data
     def self.data_object(file_path,data=[])
-      if data.length > 0
-        data = [data] if !data.is_a?(Array)
-        file = YAML.load_file(file_path)
-        answer = Array.new
-        data.each do |d|
-          object = to_object(file)
-          d.each do |key,value|
-            if value.is_a?(Hash)
-              if object[key.to_sym].instance_variables.include?(:@schema)
-                sub_schema = object[key.to_sym].schema
-                sub_schema.each do |i|
-                  object[key.to_sym][i] = value[i.to_s]
-                end
-              else
-                object[key.to_sym] = value
-              end
-            elsif value.is_a?(Array)
-              if object[key.to_sym].instance_variables.include?(:@schema)
-                sub_schema = object[key.to_sym].schema
-                ary = Array.new
-                sub_obj = ResponseObject.create(sub_schema)
-                value.each do |val|
-                  sub_obj_inst = sub_obj.new
-                  sub_schema.each do |i|
-                    sub_obj_inst.instance_variable_set("@#{i.to_s}".to_sym, val[i.to_s])
-                  end
-                  ary << sub_obj_inst
-                end
-                object[key.to_sym] = ary
-              else
-                object[key.to_sym] = value
-              end
-            else
-              object[key.to_sym] = value
-            end
-          end
-          answer << object
-        end
-        return answer.length == 1 ? answer[0] : answer
-      end
-      return Array.new
+      data = [data] if !data.is_a?(Array)
+      file = YAML.load_file(file_path)
+      answer = data.map { |d| build_data_object(d, file) }
+      
+      return answer.length == 1 ? answer[0] : answer
     end
 
     #check if model schema exists
@@ -77,5 +41,47 @@ module NetupResource
       return File.exists?("#{Rails.root}/config/netup_resource/schema/#{name}.yml")
     end
 
+    private
+      def build_data_object(data,file)
+        object = to_object(file)
+
+        data.each do |key, value|
+          case value.class
+          when Hash then build_data_object_from_hash(object, key, value)
+          when Array then build_data_object_from_array(object, key, value)
+          else object[key.to_sym] = value end
+        end
+
+        object
+      end
+
+      def build_data_object_from_hash(object,key,value)
+        if object[key.to_sym].instance_variables.include?(:@schema)
+          sub_schema = object[key.to_sym].schema
+          sub_schema.each do |i|
+            object[key.to_sym][i] = value[i.to_s]
+          end
+        else
+          object[key.to_sym] = value
+        end
+      end
+
+      def build_data_object_from_array(object, key, value)
+        if object[key.to_sym].instance_variables.include?(:@schema)
+          sub_schema = object[key.to_sym].schema
+          ary = Array.new
+          sub_obj = ResponseObject.create(sub_schema)
+          value.each do |val|
+            sub_obj_inst = sub_obj.new
+            sub_schema.each do |i|
+              sub_obj_inst.instance_variable_set("@#{i.to_s}".to_sym, val[i.to_s])
+            end
+            ary << sub_obj_inst
+          end
+          object[key.to_sym] = ary
+        else
+          object[key.to_sym] = value
+        end
+      end
   end
 end
