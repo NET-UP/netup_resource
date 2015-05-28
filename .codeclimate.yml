@@ -5,3 +5,5 @@ languages:
   Python: true
 exclude_paths:
 - "lib/doc/js/searcher.js"
+- "lib/doc/js/darkfish.js"
+- "lib/doc/js/navigation.js"
