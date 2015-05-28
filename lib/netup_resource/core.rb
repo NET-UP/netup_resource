@@ -72,7 +72,7 @@ module NetupResource
         response = resp_obj.new
         if @schema
           for i in (0...@schema.length)
-            response.instance_variable_set("@#{@schema[i].to_s}".to_sym,answer[@schema[i].to_s])
+            response.instance_variable_set("@#{@schema[i].to_s}".to_sym, answer[@schema[i].to_s])
           end
         elsif YamL.schema_exists?(self.name.downcase)
           path = "#{Rails.root}/config/netup_resource/schema/#{self.name.downcase}.yml"
