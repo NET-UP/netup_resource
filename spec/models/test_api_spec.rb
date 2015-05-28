@@ -12,8 +12,7 @@ RSpec.describe TestApi do
     { 
       :body => '{"accessing_user_id":null}',
       :headers => {
-        'Accept' => '*/*', 
-        'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 
+        'Accept' => '*/*',
         'Content-Type' => 'application/json', 
         'User-Agent' => 'Ruby'
       }
