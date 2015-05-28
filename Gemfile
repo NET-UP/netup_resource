@@ -5,9 +5,12 @@ source "https://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# jquery-rails is used by the dummy application
+# jquery-rails and sqlite3 is used by the dummy application
 gem "jquery-rails"
 gem "sqlite3"
+
+# test unit has been removed from ruby 2.2.2 core
+gem 'test-unit', '~> 3.0'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
