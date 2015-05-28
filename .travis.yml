@@ -6,3 +6,4 @@ rvm:
   - rbx
   - "2.0.0"
 script: bundle exec rspec spec
+script: gem install activerecord-sqlite3-adapter
