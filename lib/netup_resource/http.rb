@@ -19,13 +19,19 @@ module NetupResource
     #format url with params for get requests
     def self.format_get_url(url,parameters)
       formated = url
-      counter = 0
       formated = if parameters.is_a?(String)
         formated += "?#{parameters}"
       else
-        # [formated,URI.encode_www_form(parameters)].join("?")
-        parameters.each do |key,value|
-          formated += counter==0 ? '?' : '&'
+        complex_format_url(parameters, formated)
+      end
+      
+      formated
+    end
+
+    private
+      def self.complex_format_url(parameters, formated)
+        parameters.each_with_index do |(key, value), index|
+          formated += index == 0 ? '?' : '&'
           if value.is_a?(Array)
             value.each_with_index { |obj,i| formated += (i==0 ? "" : "&") + ["#{key}[#{i}]", obj].compact.join("=") }
           elsif value.is_a?(Hash)
@@ -33,15 +39,11 @@ module NetupResource
           else
             formated += [key, value].compact.join("=")
           end
-          counter += 1
         end
 
         formated
       end
-      return formated
-    end
 
-    private
       def self.extract_types(parameters,formats)
         {
           :request_type => parameters.delete(:request_type) || formats[:request_type] || formats[:type], 
