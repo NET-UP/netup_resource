@@ -8,9 +8,9 @@ Models inherit the Rest Methods post(), get(), put(), delete()
 from NetupResource::Base
 
 ===== For your response objects there are 4 possible types:
-+Model Schema+  :  (see settings)
++ Model Schema +  :  (see settings)
 
-+YAML Schema+   : create a *.yml file within the dir '/config/netup_record/schema'.
++ YAML Schema +   : create a *.yml file within the dir '/config/netup_record/schema'.
 the name of this schema should be the downcased model name.
 the schema should look like:
 
@@ -31,14 +31,14 @@ If the response to the sub-containing root-level-attribute
 is an Array, an Array of Sub-Objects will be linked to the
 corrisponding root level attribute.
 
-+Auto Detected Rails Record+: If you neither define a YAML Schema nor a Model Schema,
++ Auto Detected Rails Record +: If you neither define a YAML Schema nor a Model Schema,
 this plugin will test wether the response is an Array
 including only Hashes of the same Schema or not.
 If so, the answer to the request will be formated to
 an Array of Objects, whos attributes are set according to
 the auto detected schema.
 
-+Single Result+: If non of the upper methods fits, the Mapper will create
++ Single Result +: If non of the upper methods fits, the Mapper will create
 an Object having the attribute 'result' containing all
 of the response content.
 
