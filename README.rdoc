@@ -1,3 +1,4 @@
+{<img src="https://travis-ci.org/Ninigi/netup_resource.svg?branch=development" alt="Build Status" />}[https://travis-ci.org/Ninigi/netup_resource]
 NetupResource - Object-RESTFullService-Mapper v 0.1.0-beta-p004
 NetupResource is a Object-RESTFullService-Mapper mapping http-requests on
 Ruby Objects. As all Mappers it uses Ruby class inheritance within Model-Classes.
