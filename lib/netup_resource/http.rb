@@ -6,43 +6,14 @@ module NetupResource
     require 'active_support/core_ext/hash/conversions'
     #call API using Net::HTTP
     def self.call(url,parameters,auth=nil,ssl=false,method,formats)
-      request_type = parameters.delete(:request_type) || formats[:request_type] || formats[:type]
-      response_type = parameters.delete(:response_type) || formats[:response_type] || formats[:type]
-      formated_url = case method
-        when :get then NetupResource::HttP.format_get_url(url,parameters)
-        when :post, :put, :delete then url
-        end
-      uri = URI.parse(formated_url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      if ssl
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      end
-
-      request = case method
-        when :get 
-          Net::HTTP::Get.new(uri.request_uri)
-        when :post, :put, :delete
-          header_hash = {'Content-Type' => "application/#{response_type}"}
-          temp_request = "Net::HTTP::#{method.to_s.camelize}".constantize.new(uri.request_uri, initheader = header_hash)
-          data = parameters.send("to_#{request_type}")
-          if request_type == :html
-            temp_request.set_form_data data
-          else
-            temp_request.body = data
-          end
-
-          temp_request
-        end
-
-      request.basic_auth(auth[:user], auth[:password]) if auth
+      types = extract_types(parameters, formats)
+      uri = URI.parse formated_url(method, url, parameters)
+      http = build_http uri, ssl
+      request = build_request(method, uri, parameters, types)
       
-      response = http.request(request).body
-      return case response_type
-      when :json then JSON.parse(response)
-      when :xml then Hash.from_xml(response)
-      when :html then response
-      end
+      request.basic_auth(auth[:user], auth[:password]) if auth
+
+      parse_to_response_type http.request(request).body, types[:response_type]
     end
 
     #format url with params for get requests
@@ -69,5 +40,56 @@ module NetupResource
       end
       return formated
     end
+
+    private
+      def self.extract_types(parameters,formats)
+        {
+          :request_type => parameters.delete(:request_type) || formats[:request_type] || formats[:type], 
+          :response_type => parameters.delete(:response_type) || formats[:response_type] || formats[:type]
+        }
+      end
+
+      def self.formated_url(method,url,parameters)
+        case method
+        when :get then NetupResource::HttP.format_get_url(url,parameters)
+        when :post, :put, :delete then url
+        end
+      end
+
+      def self.build_request(method,uri,parameters,types={})
+        case method
+        when :get 
+          Net::HTTP::Get.new(uri.request_uri)
+        when :post, :put, :delete
+          header_hash = {'Content-Type' => "application/#{types[:response_type]}"}
+          temp_request = "Net::HTTP::#{method.to_s.camelize}".constantize.new(uri.request_uri, initheader = header_hash)
+          data = parameters.send("to_#{types[:request_type]}")
+          if types[:request_type] == :html
+            temp_request.set_form_data data
+          else
+            temp_request.body = data
+          end
+
+          temp_request
+        end
+      end
+
+      def self.build_http(uri,ssl=false)
+        http = Net::HTTP.new(uri.host, uri.port)
+        if ssl
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        end
+
+        http
+      end
+
+      def self.parse_to_response_type(response, response_type)
+        case response_type
+        when :json then JSON.parse(response)
+        when :xml then Hash.from_xml(response)
+        when :html then response
+        end
+      end
   end
 end
