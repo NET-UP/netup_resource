@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "netup_resource"
   s.version     = NetupResource::VERSION
   s.authors     = ["Michael Roeder", "Markus Kuerzinger", "Fabian Zitter"]
-  s.email       = ["fabian.zitter@net-up.de"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of NetupResource."
-  s.description = "TODO: Description of NetupResource."
+  s.email       = ["support@net-up.de"]
+  s.homepage    = "http://www.net-up.de"
+  s.summary     = "Summary of NetupResource."
+  s.description = "Description of NetupResource."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 
