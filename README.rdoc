@@ -1,11 +1,11 @@
 {<img src="https://travis-ci.org/Ninigi/netup_resource.svg?branch=development" alt="Build Status" />}[https://travis-ci.org/Ninigi/netup_resource]
 {<img src="https://codeclimate.com/github/Ninigi/netup_resource/badges/gpa.svg" />}[https://codeclimate.com/github/Ninigi/netup_resource]
 
-NetupResource - Object-RESTFullService-Mapper v 0.3.0p001
-NetupResource is a Object-RESTFullService-Mapper mapping http-requests on
-Ruby Objects. As all Mappers it uses Ruby class inheritance within Model-Classes.
+NetupResource - Object-RESTful-Service-Mapper v 0.3.0p001
+NetupResource is a Object-RESTful-Service-Mapper mapping http-requests on
+Ruby Objects. As all mappers it uses Ruby class inheritance within model classes.
 
-Models inherit the Rest Methods post(), get(), put(), delete()
+Models inherit the REST methods post(), get(), put(), delete()
 from NetupResource::Base
 
 ===== For your response objects there are 4 possible types:
@@ -24,23 +24,23 @@ the schema should look like:
 as you see, the yaml-schema accepts one sub-level schema
 per root. more than 1 sub-level is currently not supported.
 The Mapper will map all roots to attributes of the response
-Object. If a root has one or more sub-attributes, another
-Object will be generated with an attribute for each sub.
-This Sub-Object will be linked to the corrisponding Root-
+object. If a root has one or more sub-attributes, another
+object will be generated with an attribute for each sub.
+This sub-object will be linked to the corresponding root-
 level attribute, like 'my_request.bar.sub1'.
 If the response to the sub-containing root-level-attribute
-is an Array, an Array of Sub-Objects will be linked to the
-corrisponding root level attribute.
+is an array, an array of sub-objects will be linked to the
+corresponding root level attribute.
 
-*Auto Detected Rails Record*: If you neither define a YAML Schema nor a Model Schema,
-this plugin will test wether the response is an Array
-including only Hashes of the same Schema or not.
+*Auto Detected Rails Record*: If you neither define a YAML schema nor a model schema,
+this plugin will test wether the response is an array
+including only hashes of the same schema or not.
 If so, the answer to the request will be formated to
-an Array of Objects, whos attributes are set according to
+an array of objects, whos attributes are set according to
 the auto detected schema.
 
-*Single Result*: If non of the upper methods fits, the Mapper will create
-an Object having the attribute 'result' containing all
+*Single Result*: If non of the upper methods fits, the mapper will create
+an object having the attribute 'result' containing all
 of the response content.
 
 ==== Types of Configuration on a Model:
@@ -56,7 +56,7 @@ of the response content.
 in your model
   class Post < NetupResource::Base
     self.url = "http://www.example.com/" #define base url
-    self.schema = [:id,:date] #define response Object Schema if needed
+    self.schema = [:id,:date] #define response object schema if needed
     self.type = :json # request format
   end
 
