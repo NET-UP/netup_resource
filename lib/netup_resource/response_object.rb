@@ -19,12 +19,12 @@ module NetupResource
     end
 
     def [](arg)
-      return send(arg.to_sym) if schema.include?(arg.to_sym)
+      return send(arg.to_sym) if (schema.include?(arg.to_sym) || schema.include?(arg.to_s))
       raise ArgumentError, 'Argument not in Schema'
     end
 
     def []=(key, value)
-       schema.include?(key.to_sym) ? try("#{key}=", value) : raise(ArgumentError, 'Argument not in Schema')
+       (schema.include?(key.to_sym) || schema.include?(key.to_s)) ? try("#{key}=", value) : raise(ArgumentError, 'Argument not in Schema')
     end
 
     def each
