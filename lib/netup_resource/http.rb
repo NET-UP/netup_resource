@@ -5,7 +5,7 @@ module NetupResource
     require 'json'
     require 'active_support/core_ext/hash/conversions'
     #call API using Net::HTTP
-    def self.call(url,parameters,auth=nil,ssl=false,method,formats,debug=false)
+    def self.call(url,parameters,auth=nil,ssl=false,method,formats,debug)
       types = extract_types(parameters, formats)
       uri = URI.parse formated_url(method, url, parameters)
       http = build_http uri, ssl
