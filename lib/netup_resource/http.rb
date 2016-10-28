@@ -5,14 +5,14 @@ module NetupResource
     require 'json'
     require 'active_support/core_ext/hash/conversions'
     #call API using Net::HTTP
-    def self.call(url,parameters,auth=nil,ssl=false,method,formats)
+    def self.call(url,parameters,auth=nil,ssl=false,method,formats,debug=false)
       types = extract_types(parameters, formats)
       uri = URI.parse formated_url(method, url, parameters)
       http = build_http uri, ssl
       request = build_request(method, uri, parameters, types)
       
       request.basic_auth(auth[:user], auth[:password]) if auth
-      log_request http, request
+      log_request http, request if debug
 
       parse_to_response_type http.request(request).body, types[:response_type]
     end
