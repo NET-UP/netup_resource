@@ -13,6 +13,9 @@ module NetupResource
       #optional ssl connector
       attr_accessor :ssl
       attr_accessor :accessing_user_id
+
+      #optional _*logging*_
+      attr_accessor :debug
       #GET-Request
       # uri: api-uri
       # parameters: request params hash(optional)
@@ -67,7 +70,7 @@ module NetupResource
         parameters[:accessing_user_id] ||= $accessing_user_id  #self.accessing_user_id
         ### NIEMALS FÜR IRGENDETWAS ANDERES VERWENDEN!!!
         ### AM BESTEN EINFACH FINGER WEG!!!
-        answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats)
+        answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats,@debug)
         resp_obj = NetupResource::ResponseObject.create(@schema)
         response = resp_obj.new
         if @schema
