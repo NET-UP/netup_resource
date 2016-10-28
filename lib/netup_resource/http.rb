@@ -64,7 +64,7 @@ module NetupResource
         begin
           protocol = "http"
           protocol += "s" if http.use_ssl?
-          Rails.logger.info "[#{Time.now}] [#{request.class}] #{request.method} #{protocol}://#{http.address}:#{http.port}/#{request.uri}"
+          Rails.logger.info "[#{Time.now}] [#{request.class}] #{request.method} #{protocol}://#{http.address}:#{http.port}#{request.path}"
           request.each_header do |field, value|
             Rails.logger.info "[Request-HEADER] #{field}: #{value}"
           end
