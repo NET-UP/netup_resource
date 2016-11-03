@@ -74,7 +74,7 @@ module NetupResource
         rescue Exception => e
           Rails.logger.warning "Failed to log request: #{e}"
         end
-	yield if block_given?
+        yield if block_given?
       end
 
       def self.build_request(method,uri,parameters,types={})
