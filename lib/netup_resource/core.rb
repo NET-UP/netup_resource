@@ -84,7 +84,7 @@ module NetupResource
 
       def create_response_object(obj)
         if obj.is_a? Array
-          return answer.map{|obj| create_response_object(obj)}
+          return obj.map{|obj| create_response_object(obj)}
         end
         response = resp_obj.new
         for i in (0...@schema.length)
