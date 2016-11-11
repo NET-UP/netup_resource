@@ -3,11 +3,15 @@ module NetupResource
 
     attr_accessor :schema
 
-    def method_missing(name, *args)
-      schema_name = name
+    private
+    def self.schema_name_of(name)
+      schema_name = name.to_s
       schema_name = schema_name[0..-2] if schema_name.end_with? "="
+    end
 
-      if schema.include? schema_name
+    public
+    def method_missing(name, *args)
+      if schema.include? Base.schema_name_of(name)
         # Speed up things by registering
         singleton_class.instance_eval do
           attr_accessor schema_name
@@ -25,10 +29,7 @@ module NetupResource
     end
 
     def respond_to_missing(name)
-      schema_name = name
-      schema_name = schema_name[0..-2] if schema_name.end_with? "="
-
-      if schema.include? schema_name
+      if schema.include? Base.schema_name_of(name)
         true
       else
         super(name)
