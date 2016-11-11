@@ -12,7 +12,8 @@ module NetupResource
 
     public
     def method_missing(name, *args)
-      if schema.include? Base.schema_name_of(name)
+      schema_name = Base.schema_name_of(name)
+      if schema.include? schema_name
         # Speed up things by registering
         singleton_class.instance_eval do
           attr_accessor schema_name
