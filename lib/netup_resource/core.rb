@@ -73,7 +73,7 @@ module NetupResource
         answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats,@debug)
         resp_obj = NetupResource::ResponseObject.create(@schema)
         if @schema
-          return create_response_object(obj)
+          return create_response_object(answer)
         elsif YamL.schema_exists?(self.name.downcase)
           path = "#{Rails.root}/config/netup_resource/schema/#{self.name.downcase}.yml"
           return YamL.data_object(path,answer)
