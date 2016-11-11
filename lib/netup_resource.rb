@@ -75,9 +75,9 @@
 
 module NetupResource
   require "netup_resource/yaml"
+  require "netup_resource/response_object"
   require "netup_resource/core"
   require "netup_resource/http"
-  require "netup_resource/response_object"
   require "utility/array"
   require "utility/hash"
 end
