@@ -71,7 +71,6 @@ module NetupResource
         ### NIEMALS FÜR IRGENDETWAS ANDERES VERWENDEN!!!
         ### AM BESTEN EINFACH FINGER WEG!!!
         answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats,@debug)
-        resp_obj = NetupResource::ResponseObject.create(@schema)
         if @schema
           return create_response_object(answer)
         elsif YamL.schema_exists?(self.name.downcase)
@@ -86,7 +85,7 @@ module NetupResource
         if obj.is_a? Array
           return obj.map{|obj| create_response_object(obj)}
         end
-        response = resp_obj.new
+        response = new
         for i in (0...@schema.length)
           response.instance_variable_set("@#{@schema[i].to_s}".to_sym, obj[@schema[i].to_s])
         end
