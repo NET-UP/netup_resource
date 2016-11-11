@@ -30,11 +30,11 @@ module NetupResource
       end
     end
 
-    def respond_to_missing?(name)
+    def respond_to_missing?(name, include_private=false)
       if schema.include? Base.schema_name_of(name)
         true
       else
-        super(name)
+        super(name, include_private)
       end
     end
 
