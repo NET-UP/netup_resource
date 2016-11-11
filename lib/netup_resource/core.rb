@@ -1,6 +1,8 @@
 module NetupResource  
   class Base < ResponseObject
 
+    attr_accessor :schema
+
     class << self
       #base url attribute; type: string
       attr_accessor :url
