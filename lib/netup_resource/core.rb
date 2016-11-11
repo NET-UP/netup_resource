@@ -62,15 +62,9 @@ module NetupResource
       def ssl=(ssl)
         @ssl = ssl
       end
-      private
-      #general request function
-      def request(uri="",parameters={},auth=nil,type)
-        ### DAS HIER ($accessing_user_id) IST EINE GLOBALE VARIABLE
-        ### SIE WIRD DER API ÜBERGEBEN UND ENTHÄLT DEN EINGELOGGTEN USER (FALLS VORHANDEN)
-        parameters[:accessing_user_id] ||= $accessing_user_id  #self.accessing_user_id
-        ### NIEMALS FÜR IRGENDETWAS ANDERES VERWENDEN!!!
-        ### AM BESTEN EINFACH FINGER WEG!!!
-        answer = NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats,@debug)
+
+      protected
+      def parse_answer(answer)
         if @schema
           return create_response_object(answer)
         elsif YamL.schema_exists?(self.name.downcase)
@@ -81,11 +75,23 @@ module NetupResource
         end
       end
 
+      private
+      #general request function
+      def request(uri="",parameters={},auth=nil,type)
+        ### DAS HIER ($accessing_user_id) IST EINE GLOBALE VARIABLE
+        ### SIE WIRD DER API ÜBERGEBEN UND ENTHÄLT DEN EINGELOGGTEN USER (FALLS VORHANDEN)
+        parameters[:accessing_user_id] ||= $accessing_user_id  #self.accessing_user_id
+        ### NIEMALS FÜR IRGENDETWAS ANDERES VERWENDEN!!!
+        ### AM BESTEN EINFACH FINGER WEG!!!
+        parse_answer(NetupResource::HttP.call(uri,parameters,auth,@ssl,type,formats,@debug))
+      end
+
+
       def create_response_object(obj)
         if obj.is_a? Array
           return obj.map{|obj| create_response_object(obj)}
         end
-        
+
         response = new
         for i in (0...@schema.length)
           response.instance_variable_set("@#{@schema[i].to_s}".to_sym, obj[@schema[i].to_s])
