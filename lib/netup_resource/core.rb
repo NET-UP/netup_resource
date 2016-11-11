@@ -3,6 +3,38 @@ module NetupResource
 
     attr_accessor :schema
 
+    def method_missing(name, *args)
+      schema_name = name
+      schema_name = schema_name[0..-2] if schema_name.end_with? "="
+
+      if schema.include? schema_name
+        # Speed up things by registering
+        singleton_class.instance_eval do
+          attr_accessor schema_name
+        end
+
+        # Only if it doesn't end with an equal-sign
+        if name == schema_name
+          instance_variable_get(:"@#{schema_name}")
+        else
+          instance_variable_set(:"@#{schema_name}", args[0])
+        end
+      else
+        super(name, *args)
+      end
+    end
+
+    def respond_to_missing(name)
+      schema_name = name
+      schema_name = schema_name[0..-2] if schema_name.end_with? "="
+
+      if schema.include? schema_name
+        true
+      else
+        super(name)
+      end
+    end
+
     class << self
       #base url attribute; type: string
       attr_accessor :url
