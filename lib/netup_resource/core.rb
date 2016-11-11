@@ -1,5 +1,5 @@
 module NetupResource  
-  class Base
+  class Base < ResponseObject
 
     class << self
       #base url attribute; type: string
