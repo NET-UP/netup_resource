@@ -7,7 +7,7 @@ module NetupResource
     def self.schema_name_of(name)
       schema_name = name.to_s
       schema_name = schema_name[0..-2] if schema_name.end_with? "="
-      schema_name
+      schema_name.to_sym
     end
 
     public
