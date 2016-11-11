@@ -30,7 +30,7 @@ module NetupResource
       end
     end
 
-    def respond_to_missing(name)
+    def respond_to_missing?(name)
       if schema.include? Base.schema_name_of(name)
         true
       else
