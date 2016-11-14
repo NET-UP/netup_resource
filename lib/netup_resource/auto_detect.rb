@@ -4,9 +4,10 @@ module NetupResource
       if data
         if data.is_a?(Array)
           if data.is_a_record?
-            ary = Array.new
-            data.each{|d| ary << create_object(d)}
-            @object = ary
+            # ary = Array.new
+            # data.each{|d| ary << create_object(d)}
+            # @object = ary
+            @object = data.map{|d| create_object(d)}
           else
             @object = data
           end

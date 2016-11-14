@@ -132,7 +132,10 @@ module NetupResource
         response = new
         response.instance_variable_set(:'@schema', @schema)
         for i in (0...@schema.length)
-          response.instance_variable_set("@#{@schema[i].to_s}".to_sym, parser_answer(obj[@schema[i].to_s], false))
+          response.instance_variable_set(
+            "@#{@schema[i].to_s}".to_sym,
+            parse_answer(obj[@schema[i].to_s], false)
+          )
         end
         response
       end
