@@ -1,3 +1,3 @@
 module NetupResource
-  VERSION = "0.4.0.16"
+  VERSION = "0.4.0.17"
 end

@@ -101,8 +101,8 @@ module NetupResource
       end
 
       protected
-      def parse_answer(answer)
-        if @schema
+      def parse_answer(answer, root=true)
+        if @schema and root
           return create_response_object(answer)
         elsif YamL.schema_exists?(self.name.downcase)
           path = "#{Rails.root}/config/netup_resource/schema/#{self.name.downcase}.yml"
@@ -132,7 +132,7 @@ module NetupResource
         response = new
         response.instance_variable_set(:'@schema', @schema)
         for i in (0...@schema.length)
-          response.instance_variable_set("@#{@schema[i].to_s}".to_sym, obj[@schema[i].to_s])
+          response.instance_variable_set("@#{@schema[i].to_s}".to_sym, parser_answer(obj[@schema[i].to_s], false))
         end
         response
       end
