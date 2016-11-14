@@ -100,6 +100,14 @@ module NetupResource
         @ssl = ssl
       end
 
+      def from(resource)
+        if !self.schema
+          raise RuntimeError.new "Cannot convert into this type"
+        end
+
+        parse_answer(resource)
+      end
+
       protected
       def parse_answer(answer, root=true)
         if @schema and root
