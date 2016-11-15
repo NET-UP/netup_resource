@@ -137,7 +137,7 @@ module NetupResource
         end
 
         if obj.is_a? ResponseObject
-          json = obj.to_json
+          obj = obj.to_json
         end
 
         response = new
