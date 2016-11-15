@@ -104,7 +104,6 @@ module NetupResource
         if !self.schema
           raise RuntimeError.new "Cannot convert into this type"
         end
-
         parse_answer(resource)
       end
 
@@ -135,6 +134,10 @@ module NetupResource
       def create_response_object(obj)
         if obj.is_a? Array
           return obj.map{|obj| create_response_object(obj)}
+        end
+
+        if obj.is_a? ResponseObject
+          json = obj.to_json
         end
 
         response = new
