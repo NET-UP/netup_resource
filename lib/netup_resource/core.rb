@@ -143,7 +143,7 @@ module NetupResource
         response = new
         response.instance_variable_set(:'@schema', @schema)
         @schema.each do |key|
-          if obj.is_a?(Hash) || obj.respond_to? :[]
+          if obj.is_a?(Hash) || obj.respond_to?(:[])
             value = obj[key]
             value = obj[key.to_s] if !value.present?
           else
