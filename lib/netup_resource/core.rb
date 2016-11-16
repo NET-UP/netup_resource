@@ -133,7 +133,7 @@ module NetupResource
 
       def create_response_object(obj)
         if obj.is_a? Array
-          return obj.map{|obj| create_response_object(obj)}
+          return obj.map{|item| create_response_object(item)}
         end
 
         if obj.is_a? ResponseObject
@@ -142,10 +142,14 @@ module NetupResource
 
         response = new
         response.instance_variable_set(:'@schema', @schema)
-        for i in (0...@schema.length)
+        @schema.each do |key|
+          if !obj.has_key? key
+            key = key.to_s
+          end
+
           response.instance_variable_set(
-            "@#{@schema[i].to_s}".to_sym,
-            parse_answer(obj[@schema[i].to_s], false)
+            "@#{key.to_s}".to_sym,
+            parse_answer(obj[key.to_s], false)
           )
         end
         response
