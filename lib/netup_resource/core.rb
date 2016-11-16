@@ -143,13 +143,16 @@ module NetupResource
         response = new
         response.instance_variable_set(:'@schema', @schema)
         @schema.each do |key|
-          if !obj.has_key? key
-            key = key.to_s
+          if obj.is_a?(Hash) || obj.respond_to? :[]
+            value = obj[key]
+            value = obj[key.to_s] if !value.present?
+          else
+            value = obj.send(key)
           end
 
           response.instance_variable_set(
-            "@#{key.to_s}".to_sym,
-            parse_answer(obj[key.to_s], false)
+            "@#{key.to_s}",
+            parse_answer(value, false)
           )
         end
         response
