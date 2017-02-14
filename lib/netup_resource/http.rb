@@ -75,7 +75,7 @@ module NetupResource
             Rails.logger.info "[Request-BODY] #{request.body}"
           end
         rescue Exception => e
-          Rails.logger.warning "Failed to log request: #{e}"
+          Rails.logger.info "Failed to log request: #{e}"
         end
         yield if block_given?
       end
@@ -89,7 +89,7 @@ module NetupResource
           Rails.logger.info "[Response-BODY] #{response.body}"
         end
       rescue Exception => e
-        Rails.logger.warning "Failed to log response: #{e}"
+        Rails.logger.info "Failed to log response: #{e}"
       end
 
       def self.build_request(method,uri,parameters,types={})
