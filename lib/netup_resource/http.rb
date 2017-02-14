@@ -85,9 +85,7 @@ module NetupResource
         response.each_header do |field, value|
           Rails.logger.info "[Response-HEADER] #{field}: #{value}"
         end
-        if response.body_permitted?
-          Rails.logger.info "[Response-BODY] #{response.body}"
-        end
+        Rails.logger.info "[Response-BODY] #{response.body}"
       rescue Exception => e
         Rails.logger.info "Failed to log response: #{e}"
       end
