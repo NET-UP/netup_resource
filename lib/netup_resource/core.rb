@@ -1,4 +1,4 @@
-module NetupResource  
+module NetupResource
   class Base < ResponseObject
 
     attr_accessor :schema

@@ -12,9 +12,12 @@ module NetupResource
       request = build_request(method, uri, parameters, types)
       
       request.basic_auth(auth[:user], auth[:password]) if auth
-      log_request http, request if debug
 
-      parse_to_response_type http.request(request).body, types[:response_type]
+      log_request http, request if debug
+      response = http.request(request)
+      log_response http, request, response if debug
+
+      parse_to_response_type response.body, types[:response_type]
     end
 
     #format url with params for get requests
@@ -77,9 +80,21 @@ module NetupResource
         yield if block_given?
       end
 
+      def self.log_response(http, request, response, body)
+        Rails.logger.info "[Response-CODE] #{response.code}"
+        response.each_header do |field, value|
+          Rails.logger.info "[Response-HEADER] #{field}: #{value}"
+        end
+        if response.body_permitted?
+          Rails.logger.info "[Response-BODY] #{response.body}"
+        end
+      rescue Exception => e
+        Rails.logger.warning "Failed to log response: #{e}"
+      end
+
       def self.build_request(method,uri,parameters,types={})
         case method
-        when :get 
+        when :get
           Net::HTTP::Get.new(uri.request_uri)
         when :post, :put, :delete
           header_hash = {'Content-Type' => "application/#{types[:response_type]}"}
