@@ -80,7 +80,7 @@ module NetupResource
         yield if block_given?
       end
 
-      def self.log_response(http, request, response, body)
+      def self.log_response(http, request, response)
         Rails.logger.info "[Response-CODE] #{response.code}"
         response.each_header do |field, value|
           Rails.logger.info "[Response-HEADER] #{field}: #{value}"
