@@ -38,7 +38,7 @@ module NetupResource
 
     #check if model schema exists
     def self.schema_exists?(name)
-      return File.exists?("#{Rails.root}/config/netup_resource/schema/#{name}.yml")
+      return File.exist?("#{Rails.root}/config/netup_resource/schema/#{name}.yml")
     end
 
     private
