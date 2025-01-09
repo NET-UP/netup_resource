@@ -23,7 +23,7 @@ Die wenigen, nötigen Konfigurationen finden jeweils im Klassen-Korpus der Model
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "< 8"
+  s.add_dependency "rails", "< 9"
 
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "webmock"
